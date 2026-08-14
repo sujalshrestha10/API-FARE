@@ -31,12 +31,12 @@ def calculate_fare(
     final_fare = subtotal - discount_amount
 
     return {
-        "trip_type": trip_type,
-        "charge_one_way_distance_km": distance_km,
-        "charge_two_way_distance_km": distance,
-        "base_fare": base_fare,
-        "distance_charge": distance_charge,
-        "subtotal": subtotal,
-        "discount_amount": discount_amount,
-        "final_fare": final_fare
-    }
+    "trip_type": trip_type,
+    "charge_one_way_distance_km": round(distance_km, 2),
+    "charge_two_way_distance_km": round(distance, 2),
+    "base_fare": round(base_fare, 2),
+    "distance_charge": round(distance_charge, 2),
+    "subtotal": round(subtotal, 2),
+    "discount_amount": round(discount_amount, 2),
+    "final_fare": round(final_fare, 2)
+}

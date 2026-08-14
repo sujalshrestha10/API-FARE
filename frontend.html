@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fare Estimate</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Fare Estimate</h2>
+
+    <!-- Pickup -->
+    <div class="field">
+        <label for="pickup">Pickup</label>
+
+        <input
+            id="pickup"
+            type="text"
+            value="27.7172,85.3240"
+            placeholder="Latitude, Longitude"
+        >
+    </div>
+
+
+    <!-- Drop-off -->
+    <div class="field">
+        <label for="dropoff">Drop-off</label>
+
+        <input
+            id="dropoff"
+            type="text"
+            value="27.6710,85.4298"
+            placeholder="Latitude, Longitude"
+        >
+    </div>
+
+
+    <button onclick="calculateFare()">
+        Calculate Fare
+    </button>
+
+
+    <div id="result"></div>
+
+
+    <script>
+
+        async function calculateFare() {
+
+            const pickupValue =
+                document.getElementById("pickup").value;
+
+            const dropoffValue =
+                document.getElementById("dropoff").value;
+
+
+            // Convert:
+            // "27.7172,85.3240"
+            // into:
+            // { latitude: 27.7172, longitude: 85.324 }
+
+            const [pickupLatitude, pickupLongitude] =
+                pickupValue.split(",").map(Number);
+
+            const [dropoffLatitude, dropoffLongitude] =
+                dropoffValue.split(",").map(Number);
+
+
+            const requestBody = {
+
+                trip_type: "ONE_WAY",
+
+                base_fare: 100,
+
+                per_km_rate: 30,
+
+                two_way_discount_percent: 10,
+
+                pickup: {
+                    latitude: pickupLatitude,
+                    longitude: pickupLongitude
+                },
+
+                dropoff: {
+                    latitude: dropoffLatitude,
+                    longitude: dropoffLongitude
+                }
+            };
+
+
+            console.log("Sending:", requestBody);
+
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:3000/api/v1/fare/estimate",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify(requestBody)
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                console.log("Response:", data);
+
+
+                document.getElementById("result").innerText =
+                    JSON.stringify(data, null, 2);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                document.getElementById("result").innerText =
+                    "Unable to calculate fare";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -11,38 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/health", (req, res) => {
-    res.json({
-        success: true,
-        message: "Fare Express server is running"
-    });
-});
-
-app.get('/api/fare/estimate', async (req, res) => {
-    try {
-        // 1. Extract inputs from GET query parameters
-        const {
-            trip_type,
-            base_fare,
-            distance_km,
-            per_km_rate,
-            two_way_discount_percent
-        } = req.query;
-
-        // Optional: Validate that required params are present
-        if (!trip_type || !base_fare || !distance_km || !per_km_rate || two_way_discount_percent === undefined) {
-            return res.status(400).json({
-                success: false,
-                message: 'Missing required query parameters'
-            });
-        }
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Internal server error'
-        });
-    }
-});
 
 // Temporary body test
 app.post("/test-body", (req, res) => {
