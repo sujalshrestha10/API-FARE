@@ -21,6 +21,12 @@ app.post("/test-body", (req, res) => {
         received_body: req.body
     });
 });
+app.get("/health",(req, res) => {
+    res.json({
+        success: true,
+        message: "Fare Express server is running"
+    });
+});
 
 app.use("/api/v1/fare", fareRoutes);
 
