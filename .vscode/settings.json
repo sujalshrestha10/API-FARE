@@ -1,0 +1,13 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/Python server/venv/bin/python",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/Python server",
+    "${workspaceFolder}/Python server/venv/lib/python3.14/site-packages"
+  ],
+  "mypy.args": [
+    "--python-executable=${workspaceFolder}/Python server/venv/bin/python"
+  ],
+  "pylint.args": [
+    "--init-hook=import sys; sys.path.append('${workspaceFolder}/Python server/venv/lib/python3.14/site-packages')"
+  ]
+}
