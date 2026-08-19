@@ -11,7 +11,6 @@ from fare_calculator import calculate_fare
 from route_service import get_route_and_elevation
 
 load_dotenv()
-
 BAATO_API_KEY = os.getenv("BAATO_API_KEY")
 
 
