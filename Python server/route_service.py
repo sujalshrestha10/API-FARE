@@ -17,7 +17,7 @@ import httpx
 from dotenv import load_dotenv
 from fastapi import HTTPException
 
-from elevation_service import get_route_elevation
+from python_cost_calculator.elevation_service import get_route_elevation
 
 # =============================================================================
 # Configuration
